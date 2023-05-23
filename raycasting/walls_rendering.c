@@ -6,7 +6,7 @@
 /*   By: zanejar <zanejar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 22:13:46 by zanejar           #+#    #+#             */
-/*   Updated: 2023/05/21 01:00:27 by zanejar          ###   ########.fr       */
+/*   Updated: 2023/05/22 04:18:21 by zanejar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ void render_ceiling(t_data *data, int i)
 void render_floor(t_data *data, int i)
 {
 	for (int y = data->wall.strip_bottom; y < WINDOW_HEIGHT; y++)
-		my_mlx_pixel_put(&data->img, i, y, GREEN_COLOR);
+		my_mlx_pixel_put(&data->img, i, y, BROWN_COLOR);
 }
 
 void render_3d(t_data *data)
 {
 	int i;
-	float perp_distance;
+	double perp_distance;
 
 	i = -1;
 	while (++i < NBR_RAYS)

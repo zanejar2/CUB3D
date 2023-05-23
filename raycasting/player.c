@@ -6,7 +6,7 @@
 /*   By: zanejar <zanejar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:28:04 by zanejar           #+#    #+#             */
-/*   Updated: 2023/05/21 01:05:24 by zanejar          ###   ########.fr       */
+/*   Updated: 2023/05/23 23:16:11 by zanejar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void render_player(t_data *data)
 	data->player.rotationAngle = PI / 2;
 	data->player.moveSpeed = 2;
 	data->player.rotationSpeed = (3 * PI) / 100;
-	// player_draw(data);
+	player_draw(data);
 }
 
 void direction(t_data *data)
@@ -83,6 +83,5 @@ int update(t_data *data)
 	ray_caster(data);
 	render_3d(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img_ptr, 0, 0);
-	mlx_clear_image(data);
 	return (0);
 }

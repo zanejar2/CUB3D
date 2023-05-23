@@ -6,13 +6,13 @@
 #    By: zanejar <zanejar@student.1337.ma>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/03 17:10:09 by zanejar           #+#    #+#              #
-#    Updated: 2023/05/20 06:59:07 by zanejar          ###   ########.fr        #
+#    Updated: 2023/05/22 02:46:14 by zanejar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub
 
-CC = gcc
+CC = gcc 
 
 CFLAGS = -Wall -Wextra -Werror
 
