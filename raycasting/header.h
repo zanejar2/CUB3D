@@ -11,10 +11,17 @@
 /* ************************************************************************** */
 
 #ifndef HEADER_H
-# define HEADER_H
+# define HEADER_H   
 # include <math.h>
 # include <stdio.h>
-# include <stdlib.h>
+# include <stdlib.h>    
+#ifndef PARSER
+#define PARSER
+
+#include "../parsing/macros.h"
+#include "../parsing/parsing.h"
+
+#endif
 # include <unistd.h>
 # include <fcntl.h>
 # include<mlx.h>
@@ -51,81 +58,92 @@
 #define MINI_MAP_SCALE_FACTOR 0.2
 #define WALL_STRIP_WIDTH 1
 
-#define TEXTURE_WIDTH 32
-#define TEXTURE_HEIGHT 32
+#define NORTH 0
+#define SOUTH 1
+#define EAST 2
+#define WEST 3
 
 
-typedef struct s_ray
+
+typedef struct 		s_ray
 {
-	double	x_intercept;
-    double	y_intercept;
-    double	x_step;
-    double	y_step;
-    double	next_vert_x;
-    double	next_vert_y;
-	double	next_horz_x;
-	double	next_horz_y;
-	double	hit_x_v;
-	double	hit_y_v;
-	double	hit_x_h;
-	double	hit_y_h;
-	double	hit_x;
-	double	hit_y;
-	double	dh;
-    double	dv;
-	double	ray_angle;
-	double	ray_distance;
-}				t_ray;
+	double			x_intercept;
+    double			y_intercept;
+    double			x_step;
+    double			y_step;
+    double			next_vert_x;
+    double			next_vert_y;
+	double			next_horz_x;
+	double			next_horz_y;
+	double			hit_x_v;
+	double			hit_y_v;
+	double			hit_x_h;
+	double			hit_y_h;
+	double			hit_x;
+	double			hit_y;
+	double			dh;
+    double			dv;
+	int				vert;
+	int				horz;
+	double			ray_angle;
+	double			ray_distance;
+}					t_ray;
 
-typedef struct s_img
+typedef struct		s_img
 {
-	void	*img_ptr;
-	char	*addr;
-	int		bits_per_pixel;
-	int		lineLength;
-	int		endian;
-}				t_img;
+	void			*img_ptr;
+	int				*addr;
+	int				bits_per_pixel;
+	int				lineLength;
+	int				endian;
+}					t_img;
 
-typedef struct s_wall
+typedef struct		s_wall
 {
-	double	strip_height;
-	double	projection;
-	double	perp_distance;
-	int 	strip_top;
-	int 	strip_bottom;
-}			t_wall;	
+	double			strip_height;
+	double			projection;
+	double			perp_distance;
+	int 			strip_top;
+	int 			strip_bottom;
+}					t_wall;	
 
-typedef struct	s_player {
-	double	x;
-	double	y;  
-	double	radius;
-	int		walkDirection;
-	int 	sideDirection;
-	double	rotationAngle;
-	double	moveSpeed;
-	double	rotationSpeed;
-	double	height;
-	double   width;
-}				t_player;
+typedef struct		s_player {
+	double			x;
+	double			y;  
+	double			radius;
+	int				walkDirection;
+	int 			sideDirection;
+	int				slide_right;
+	int				slide_left;
+	double			rotationAngle;
+	double			moveSpeed;
+	double			rotationSpeed;
+	double			height;
+	double			width;
+}					t_player;
 
-typedef struct s_data {
-	int			grid[MAP_NUM_ROWS][MAP_NUM_COLS];
-	void		*mlx_ptr;
-	void		*win_ptr;
-	t_img		img;
-	t_img		texture[4];
-	t_ray		ray[NBR_RAYS];
-	t_wall		wall;
-	t_player	player;
-}				t_data;
+typedef struct 		s_data {
+	int				grid[MAP_NUM_ROWS][MAP_NUM_COLS];
+	void			*mlx_ptr;
+	void			*win_ptr;
+	t_img			img;
+	t_img			texture[4];
+	t_ray			ray[NBR_RAYS];
+	t_wall			wall;
+	long int 		color_floor;
+	long int 		color_ceiling;
+	int 			wall_side;
+	t_player		player;
+	t_data_parsing	*parsing;
+}					t_data;
 
 void			render_map(t_data *data);
 int				close_window(void);
 int				key_pressed(int keycode, t_data *data);
 int				key_released(int keycode, t_data *data);
 void			player_draw(t_data *data);
-void			render_player(t_data *data);
-int				update(t_data *data) ;
+void 			render_player(t_data *data,t_data_parsing *parsing);
+int 			update(t_data *data);
 void	 		line_drawing(t_data *data,  int end_x, int end_y);
 void			ray_caster(t_data *data);
 void			my_mlx_pixel_put(t_img *data, int x, int y, int color);
@@ -144,9 +162,16 @@ void			dist_calc(t_data *data, int i, int h, int v);
 int				is_ray_facing_right(double my_angle);
 int				is_ray_facing_down(double my_angle);
 
-void			render_3d(t_data *data);
+void 			render_3d(t_data *data);
 void 			render_walls(t_data *data, int i);
-void			render_ceiling(t_data *data, int i);
-void			render_floor(t_data *data, int i);
+int 			calcul_rows(char **map);
+int 			calcul_col(char **map);
+int 			fill_int(char c);
+double			get_angle(t_data_parsing *data);
+
+void			textures_init(t_data *data);
+void wall_sider(t_data *data, int i);
+
+
 
 #endif

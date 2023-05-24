@@ -6,19 +6,19 @@
 /*   By: zanejar <zanejar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 11:11:36 by wiessaiy          #+#    #+#             */
-/*   Updated: 2023/05/21 03:32:08 by zanejar          ###   ########.fr       */
+/*   Updated: 2023/05/24 03:47:42 by zanejar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "header.h"   
 
-double adjust_angle(double angle) 
+double adjust_angle(double angle)   
 {
-    angle = fmod(angle, 2 * PI);
+    angle = fmod(angle, 2 * PI);      
     if (angle < 0) {
         angle = (2 * PI) + angle;
-    }
-    return angle;
+    }   
+    return angle;   
 }
 
 int found_Wall(t_data *data, int x, int y)
@@ -153,6 +153,7 @@ void dist_calc(t_data *data, int i, int h, int v)
 		data->ray[i].hit_x = data->ray[i].hit_x_v;
         data->ray[i].hit_y = data->ray[i].hit_y_v;
         data->ray[i].ray_distance = data->ray[i].dv;
+		data->ray[i].vert = 1;
 		return;
 	}
 	if (data->ray[i].dh < data->ray[i].dv || (v == 0))
@@ -160,6 +161,7 @@ void dist_calc(t_data *data, int i, int h, int v)
         data->ray[i].hit_x = data->ray[i].hit_x_h;
         data->ray[i].hit_y = data->ray[i].hit_y_h;
         data->ray[i].ray_distance = data->ray[i].dh;
+		data->ray[i].horz = 1;
 		return;
     }
 	else 
@@ -167,6 +169,7 @@ void dist_calc(t_data *data, int i, int h, int v)
 		data->ray[i].hit_x = data->ray[i].hit_x_v;
 		data->ray[i].hit_y = data->ray[i].hit_y_v;
 		data->ray[i].ray_distance = data->ray[i].dv;
+		data->ray[i].vert = 1;
 		return;
 	}
 }
