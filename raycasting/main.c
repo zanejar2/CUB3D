@@ -6,7 +6,7 @@
 /*   By: zanejar <zanejar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 04:17:43 by wiessaiy          #+#    #+#             */
-/*   Updated: 2023/05/24 03:55:11 by zanejar          ###   ########.fr       */
+/*   Updated: 2023/05/27 10:22:11 by zanejar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ void textures_init(t_data *data)
 	&data->texture[2].bits_per_pixel, &data->texture[2].lineLength, &data->texture[2].endian);
 	data->texture[3].addr = (int*)mlx_get_data_addr(data->parsing->east_txt, \
 	&data->texture[3].bits_per_pixel, &data->texture[3].lineLength, &data->texture[3].endian);
+
+	// data->texture[0].lineLength /= 4;
+	// data->texture[1].lineLength /= 4;
+	// data->texture[2].lineLength /= 4;
+	// data->texture[3].lineLength /= 4;
 }
 
 int main(int ac,char **av)
@@ -64,7 +69,7 @@ int main(int ac,char **av)
 		data.img.addr = (int*)mlx_get_data_addr(data.img.img_ptr, &data.img.bits_per_pixel, \
 		&data.img.lineLength, &data.img.endian);
 		
-		// textures_init(&data);
+		textures_init(&data);
 		
 		render_map(&data);
 		render_player(&data, data.parsing);
@@ -74,6 +79,7 @@ int main(int ac,char **av)
 
 		update(&data);
 		
+		mlx_clear_window(data.mlx_ptr, data.win_ptr);
 		mlx_hook(data.win_ptr, 2, 0, key_pressed, &data);
 		mlx_hook(data.win_ptr, 3, 0, key_released, &data);
 		mlx_loop_hook(data.mlx_ptr, update, &data);

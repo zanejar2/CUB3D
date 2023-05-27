@@ -6,7 +6,7 @@
 /*   By: zanejar <zanejar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 22:13:46 by zanejar           #+#    #+#             */
-/*   Updated: 2023/05/24 05:55:08 by zanejar          ###   ########.fr       */
+/*   Updated: 2023/05/27 10:34:42 by zanejar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,51 @@
         
 void wall_sider(t_data *data, int i)
 {
-	if (!is_ray_facing_down(data->ray[i].ray_angle && !data->ray[i].vert))
+	if (!is_ray_facing_down(data->ray[i].ray_angle) && !data->ray[i].vert)
 		data->wall_side = NORTH;
-	else if (is_ray_facing_down(data->ray[i].ray_angle && !data->ray[i].vert))
+	else if (is_ray_facing_down(data->ray[i].ray_angle) && !data->ray[i].vert)
 		data->wall_side = SOUTH;
-	else if (is_ray_facing_right(data->ray[i].ray_angle && data->ray[i].vert))
+	else if (is_ray_facing_right(data->ray[i].ray_angle) && data->ray[i].vert)
 		data->wall_side = EAST;
-	else if (!is_ray_facing_right(data->ray[i].ray_angle && data->ray[i].vert))
+	else if (!is_ray_facing_right(data->ray[i].ray_angle) && data->ray[i].vert)
 		data->wall_side = WEST;
 }
 
-void put_textures(t_data *data)
-{
+// void put_textures(t_data *data, int x)
+// {
 	
+// }
+
+int	get_color(t_img *data, int x, int y)
+{
+	char	*dst;
+	 
+	dst = (char*) data->addr + (y * data->lineLength + x * (data->bits_per_pixel / 8));
+	int k = *(unsigned int*)dst;
+	return (k);
 }
 
 void render_walls(t_data *data, int i)
 {
+	float x;
+	float y;
+	
+	x = ((40 / PIXEL) * i) % 40;
+	y = 0;
 	for (int a = data->wall.strip_top; a < data->wall.strip_bottom; a++)
-		my_mlx_pixel_put(&data->img, i, a, WHITE_COLOR);
-	put_textures(data);
+	{
+		if (data->wall_side == NORTH)
+			my_mlx_pixel_put(&data->img, i, a, get_color(&data->texture[0], x, y));
+		else if (data->wall_side == SOUTH)
+			my_mlx_pixel_put(&data->img, i, a, get_color(&data->texture[1], x, y));
+		else if (data->wall_side == EAST)
+			my_mlx_pixel_put(&data->img, i, a, get_color(&data->texture[2], x, y));
+		else if (data->wall_side == WEST)
+			my_mlx_pixel_put(&data->img, i, a, get_color(&data->texture[3], x, y));
+		y += 40 / data->wall.strip_height;
+	}
+	// exit(0);
+	// put_textures(data, i);
 }
 
 void render_ceiling(t_data *data, int i)

@@ -6,7 +6,7 @@
 /*   By: zanejar <zanejar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 11:11:36 by wiessaiy          #+#    #+#             */
-/*   Updated: 2023/05/24 03:47:42 by zanejar          ###   ########.fr       */
+/*   Updated: 2023/05/25 03:45:28 by zanejar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,8 @@ int   vertical_intersection(t_data *data, int i)
 void    cast_ray(t_data *data, int i)
 {
     data->ray[i].ray_angle = adjust_angle(data->ray[i].ray_angle);
+	data->ray[i].vert = 0;
+	data->ray[i].horz = 0;
 	int h = horizontal_intersection(data, i);
 	int v = vertical_intersection(data, i);
 	dist_calc(data, i, h, v);

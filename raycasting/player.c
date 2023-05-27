@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiessaiy <wiessaiy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zanejar <zanejar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:28:04 by zanejar           #+#    #+#             */
-/*   Updated: 2023/05/23 23:03:02 by wiessaiy         ###   ########.fr       */
+/*   Updated: 2023/05/25 08:01:44 by zanejar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,16 @@ void direction(t_data *data)
 	}
 }
 
-void mlx_clear_image(t_data *data)
-{
-	int x, y;
-	int color = BLACK_COLOR;
-	for (x = 0; x < WINDOW_WIDTH; x++)
-	{
-		for (y = 0; y < WINDOW_HEIGHT; y++)
-			my_mlx_pixel_put(&data->img, x, y, color);
-	}
-}
+// void mlx_clear_image(t_data *data)
+// {
+// 	int x, y;
+// 	int color = BLACK_COLOR;
+// 	for (x = 0; x < WINDOW_WIDTH; x++)
+// 	{
+// 		for (y = 0; y < WINDOW_HEIGHT; y++)
+// 			my_mlx_pixel_put(&data->img, x, y, color);
+// 	}
+// }
 
 int update(t_data *data) 
 {
@@ -88,6 +88,7 @@ int update(t_data *data)
 	ray_caster(data);
 	render_3d(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img_ptr, 0, 0);
-	mlx_clear_image(data);
+	// mlx_clear_image(data);
+	// mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	return (0);
 }

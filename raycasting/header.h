@@ -64,7 +64,6 @@
 #define WEST 3
 
 
-
 typedef struct 		s_ray
 {
 	double			x_intercept;
@@ -109,7 +108,7 @@ typedef struct		s_wall
 
 typedef struct		s_player {
 	double			x;
-	double			y;  
+	double			y;
 	double			radius;
 	int				walkDirection;
 	int 			sideDirection;
@@ -170,7 +169,8 @@ int 			fill_int(char c);
 double			get_angle(t_data_parsing *data);
 
 void			textures_init(t_data *data);
-void wall_sider(t_data *data, int i);
+void			wall_sider(t_data *data, int i);
+void			put_textures(t_data *data, int i);
 
 
 
