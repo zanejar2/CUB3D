@@ -6,7 +6,7 @@
 /*   By: zanejar <zanejar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 17:12:48 by zanejar           #+#    #+#             */
-/*   Updated: 2023/05/31 22:43:54 by zanejar          ###   ########.fr       */
+/*   Updated: 2023/06/01 17:45:39 by zanejar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_ray
 	double		next_horz_y;
 	double		hit_x_v;
 	double		hit_y_v;
+	int				found_door;
 	double		hit_x_h;
 	double		hit_y_h;
 	double		hit_x;
@@ -125,8 +126,9 @@ typedef struct s_data
 	void			*win_ptr;
 	t_img			img;
 	t_ray			ray[NBR_RAYS];
-	t_img			texture[4];
+	t_img			texture[5];
 	t_wall			wall;
+	char			*door_path;
 	long int		color_floor;
 	int 			op;
 	void			*img1_ptr;
@@ -173,6 +175,7 @@ void			render_walls(t_data *data, int i);
 int				calcul_rows(char **map);
 int				calcul_col(char **map);
 int				fill_int(char c);
+void			open_door(t_data* data);
 
 double			get_angle(t_data_parsing *data);
 

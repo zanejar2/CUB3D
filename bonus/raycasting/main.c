@@ -6,7 +6,7 @@
 /*   By: zanejar <zanejar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 04:17:43 by wiessaiy          #+#    #+#             */
-/*   Updated: 2023/06/01 00:51:19 by zanejar          ###   ########.fr       */
+/*   Updated: 2023/06/01 17:46:41 by zanejar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	func_picture(t_data* data,t_data_parsing* data_parsing)
 	int		fd;
 	int		i;
 
-	fd = open("file.txt", O_RDWR);
+
+	fd = open("gun.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		printf("Open error\n");
@@ -129,6 +130,7 @@ int	main(int ac, char **av)
 		
 		func_picture(&data,data.parsing);
 		
+		data.door_path = "./textures/door.xpm";
 		textures_init(&data);
 		
 		render_map(&data);
