@@ -6,7 +6,7 @@
 /*   By: zanejar <zanejar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 17:12:48 by zanejar           #+#    #+#             */
-/*   Updated: 2023/06/01 02:57:49 by zanejar          ###   ########.fr       */
+/*   Updated: 2023/06/03 21:27:49 by zanejar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define GREY_COLOR 0x808080
 # define BROWN_COLOR 0x964B00
 
-# define PIXEL 32
+# define TEX_SIZE 64
 
 # define WINDOW_WIDTH 1280
 # define WINDOW_HEIGHT 720
@@ -81,7 +81,7 @@ typedef struct s_ray
 	double		dv;
 	double		ray_angle;
 	double		ray_distance;
-	int vert;
+	int 		vert;
 }				t_ray;
 
 typedef struct s_img
@@ -131,6 +131,9 @@ typedef struct s_data
 	void			*img1_ptr;
 	int 			m;
 	int				n;
+	double			pixel_x;
+	double			pixel_y;
+	double			tile_size;
 	int				wall_side;
 	long int		color_ceiling;
 	t_data_parsing	*parsing;
@@ -179,4 +182,4 @@ void			wall_sider(t_data *data, int i);
 int				get_color(t_img *data, int x, int y);
 
 
-#endif
+#endif    

@@ -6,7 +6,7 @@
 /*   By: zanejar <zanejar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 22:13:46 by zanejar           #+#    #+#             */
-/*   Updated: 2023/05/31 21:54:49 by zanejar          ###   ########.fr       */
+/*   Updated: 2023/06/03 23:11:10 by zanejar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,25 @@ void render_walls(t_data *data, int i)
 {
 	float x;
 	float y;
+	int a;
 	
 	if (data->ray[i].vert)
-		x = (int)data->ray[i].hit_y % PIXEL;
+		x = (int)data->ray[i].hit_y % (int)data->tile_size;
 	else
-		x = (int)data->ray[i].hit_x % PIXEL;
+		x = (int)data->ray[i].hit_x % (int)data->tile_size;
+
+	float tex_ratio = TEX_SIZE / data->tile_size;
+    x *= tex_ratio;
+
 	if (data->wall.strip_top > 0)
 		y = 0;
 	else if (data->wall.strip_top == 0)
 	{
 		int pos_y = (data->wall.strip_height - WINDOW_HEIGHT) / 2;
-		y = pos_y * (PIXEL / data->wall.strip_height);
+		y = pos_y * (TEX_SIZE / data->wall.strip_height);
 	}
-	for (int a = data->wall.strip_top; a < data->wall.strip_bottom; a++)
+	a = data->wall.strip_top;
+	while (a < data->wall.strip_bottom)
 	{
 		if (data->wall_side == NORTH)
 			my_mlx_pixel_put(&data->img, i, a, get_color(&data->texture[0], x, y));
@@ -59,20 +65,33 @@ void render_walls(t_data *data, int i)
 			my_mlx_pixel_put(&data->img, i, a, get_color(&data->texture[2], x, y));
 		else if (data->wall_side == WEST)
 			my_mlx_pixel_put(&data->img, i, a, get_color(&data->texture[3], x, y));
-		y += PIXEL / data->wall.strip_height;
+		y += TEX_SIZE / data->wall.strip_height;
+		a++;
 	}
 }
 
 void render_ceiling(t_data *data, int i)
 {
-	for (int y = 0; y < data->wall.strip_top; y++)
+	int y;
+	
+	y = 0;
+	while (y < data->wall.strip_top)
+	{
 		my_mlx_pixel_put(&data->img, i, y, data->color_ceiling);
+		y++;
+	}
 }
 
 void render_floor(t_data *data, int i)
 {
-	for (int y = data->wall.strip_bottom; y < WINDOW_HEIGHT; y++)
+	int y;
+	
+	y = data->wall.strip_bottom;
+	while (y < WINDOW_HEIGHT)
+	{
 		my_mlx_pixel_put(&data->img, i, y, data->color_floor);
+		y++;
+	}
 }
 
 void render_3d(t_data *data)
@@ -84,7 +103,7 @@ void render_3d(t_data *data)
 	while (++i < NBR_RAYS)
 	{
 		perp_distance = data->ray[i].ray_distance * cos(data->ray[i].ray_angle - data->player.rotationAngle);
-		data->wall.strip_height = (PIXEL / perp_distance) * data->wall.projection;
+		data->wall.strip_height = (data->tile_size / perp_distance) * data->wall.projection;
 
 		data->wall.strip_top = (WINDOW_HEIGHT - data->wall.strip_height) / 2;
 		if (data->wall.strip_top < 0)

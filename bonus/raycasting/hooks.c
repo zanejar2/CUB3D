@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wiessaiy <wiessaiy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zanejar <zanejar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:28:02 by zanejar           #+#    #+#             */
-/*   Updated: 2023/06/01 17:02:13 by wiessaiy         ###   ########.fr       */
+/*   Updated: 2023/06/04 05:16:35 by zanejar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	close_window(void)
 {
 	exit(0);
-}
+}    
+
 int update2(t_data *data) 
 {
 	direction(data);
@@ -35,9 +36,8 @@ void	door_step(t_data* data,double x,double y)
 	if (x < 0 || x > WINDOW_WIDTH || y < 0 || y > WINDOW_HEIGHT) {
         return ;
     }
-    my_x = floor(x / PIXEL);
-    my_y = floor(y / PIXEL);
-	printf("x:%d y:%d\n",my_x,my_y);
+    my_x = floor(x / data->tile_size);
+    my_y = floor(y / data->tile_size);
     if (my_x < data->cols && my_y < data->rows)
 	{
 		if(data->grid[my_y][my_x] == 6)
@@ -74,9 +74,9 @@ int	key_pressed(int keycode, t_data *data)
 	if (keycode == ESC)
 			close_window();
 	if(keycode == 15)
-			data->op = 1;
-	if(keycode == 49)
-		open_door(data);
+			data->op  = 1;
+	// if(keycode == 49)
+	// 	open_door(data);
 	return (0);
 }
 
